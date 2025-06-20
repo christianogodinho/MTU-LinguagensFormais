@@ -124,9 +124,9 @@ Faça esse caminho ida e volta:
                 Devemos avançar à fase de ***MoveCabeçote***.
 
 
-***Escreve_ShiftRight*** (Ok)
+***Escreve_ShiftRight*** (Ok) (FALHA) Assume 1's onde tem 2's (Fácil de consertar), Assume a's e 1's depois do A (Mais difícil)
 
-Marque o ultimo 1 após o "A" da direita como "X".
+Marque o ultimo 1 após o "A" da direita como "X". 
 
 Para cada 1 logo após o "A" da esquerda como marque como 3 e faça:
 
@@ -158,11 +158,11 @@ Quando não houver mais "b", voltamos pela fita escrevendo 1 no lugar do 2.
 E concluímos nosso processo, podemos avançar para a fase ***MoverCabeçote***
 
 
-***MoverCabeçote*** (Ok)
+***MoverCabeçote*** (Ok) (FALHA: Etapa de avançar por todos os 1's dá problema. São 2's nesse ponto)
 
 Avança até o "A" da transição atual da esquerda, o símbolo que foi escrito.
 
-Avança por todos os 1`s até encontrar um outro símbolo:
+Avança por todos os 1`s até encontrar um outro símbolo: 
 
     Se encontrarmos "R":
 
