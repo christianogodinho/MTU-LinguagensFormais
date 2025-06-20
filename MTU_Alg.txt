@@ -1,0 +1,229 @@
+***Funcionamento:*** (Ok)
+
+O cabeçote começa no primeiro “q”, marque ele como “Q”.
+
+Caminhe até “$”, ande para a direita e marque “a” como “A”.
+
+Comece a verificar se a transição atual é válida:
+
+    Marque o 1 após o "A" como 2.
+
+    Volte até "Q", mova até "a", e marque o próximo 1 como 2.
+
+    Faça esse caminho de ida e volta:
+
+        Se ao verificar a existência de 1`s do lado esquerdo encontrarmos um "a", a transição não nos serve, devemos buscar
+        outra transição desse mesmo estado.
+
+        Se ao verificar a existência de 1`s do lado direito encontramos um "a":
+
+            Voltamos para "Q", avançamos até encontrarmos 2, e avançamos os 2`s até encontrar o próximo símbolo:
+
+                Se encontramos um "a", podemos realizar a transição definida.
+
+                Se encontrarmos um 1, a transição não nos serve, devemos buscar outra transição desse mesmo estado.
+
+
+***Buscando Transição:***
+
+Voltamos até o "Q".
+
+Avançamos até o final da fita transformando todos os 2`s em 1`s.
+
+Retornamos a "Q", e marcamos o 1 após ele como 2.
+
+Avançamos até "#", e marcamos o próximo "q" como "T", simbolizando a transição sendo testada.
+
+Verificamos se estamos tratando do mesmo estado Q:
+
+    Voltamos até "Q" e marcamos o primeiro 1 como 2.
+
+    Avançamos até "T" e marcamos o próximo 1 como 2.
+
+    Faça esse caminho ida e volta:
+
+        Se ao verificar a existência de 1`s do lado do "T" encontrarmos um "a", a transição marcada com "T" não parte do mesmo
+        estado.
+
+        nesse caso:
+
+            Avançamos até "#", e marcamos o próximo "q" como "T".
+
+            Voltamos até o antigo "T" e marcamos como "N", pois a transição não nos serve.
+
+            Voltamos até "Q" marcando todos os 1`s como 2 e reiniciamos a verificação.
+
+            Se na busca por "#" encontrarmos "$":
+
+                        Não há transição definida, então:
+
+                            Vai para a fase de ***Rejeição***
+
+        Se ao verificar a existência de 1`s do lado de "Q" encontramos um "a":
+
+            Avançamos até "T", e avançamos os 2`s até encontrar o próximo símbolo:
+
+                Se encontramos um "a", Encontramos a próxima transição a ser testada:
+
+                    Marcamos o "T" como "Q".
+
+                    Voltamos para a esquerda, marcando todos os 2`s como 1`s, mudando todos os "N" para "q" e mudando o antigo estado
+                    "Q" para "q".
+
+                    Retornamos para a fase de ***Funcionamento*** onde iniciamos a verificação de 1`s.
+
+                Se encontrarmos um 1, a transição "T" não parte do mesmo estado, devemos buscar outra transição desse mesmo estado:
+
+                    Avançamos até "#", e marcamos o próximo "q" como "T".
+
+                    Voltamos até o antigo "T" e marcamos como "N", pois a transição não nos serve.
+
+                    Voltamos até "Q" marcando todos os 1`s como 2 e reiniciamos a verificação.
+
+                    Se na busca por "#" encontrarmos "$":
+
+                        Não há transição definida, então:
+
+                            Vai para a fase de ***Rejeição***
+
+
+***Realizando Transição***
+
+Avançamos por toda a fita desmarcando os 2`s para 1.
+
+Retornamos ao "Q".
+
+Passamos pelo primeiro "a" e avançamos ao segundo "a", podemos marcá-lo como "A".
+
+Vamos comparar a quantidade de 1`s desse "A" com o "A" da direita.
+
+Marcamos o primeiro 1 após "A" da esquerda como 2 e avançamos para o "A" da direita.
+
+Marcamos o primeiro 1 após o "A" da direita como 2 e refazemos o processo.
+
+Faça esse caminho ida e volta:
+
+    Se ao verificar a existência de 1`s do lado direito encontrarmos um "a", Significa que queremos escrever algo maior:
+
+        Volta até o "$", e volta até encontrar um 2. Então marcamos esse 2 como 1.
+
+        Devemos avançar à fase de ***Escreve_ShiftRight***.
+
+    Se ao verificar a existência de 1`s do lado esquerdo encontrarmos um "a":
+
+        avançamos até "$", e avançamos até o 2, passamos por todos os 2 até encontrarmos um símbolo diferente:
+
+            Se encontramos um 1, significa que queremos escrever algo menor:
+
+                Marcamos a partir desse 1, todos os 1`s como "b".
+
+                Devemos avançar à fase de ***Escreve_ShiftLeft***.
+
+            Se encontramos um "a", significa que o símbolo a ser escrito é igual ao símbolo lido:
+
+                Devemos avançar à fase de ***MoveCabeçote***.
+
+
+***Escreve_ShiftRight*** (Ok)
+
+Marque o ultimo 1 após o "A" da direita como "X".
+
+Para cada 1 logo após o "A" da esquerda como marque como 3 e faça:
+
+    Avançamos até o "$" e passamos por todos os símbolos até chegar no vazio.
+
+    Volte para o símbolo anterior, marque-o como "b" e avance para a direita escrevendo o símbolo que acaba de ser marcado como "b".
+
+    Ao final teremos uma quantidade de "b" após o X, e não há mais 1`s após o "A" da esquerda.
+
+Ao final, avançamos na fita marcando os 2`s e 3`s como 1, e escrevendo 1 no lugar de todos os "b" que escrevemos.
+
+Depois disso podemos ir para a fase de ***MoverCabeçote***
+
+
+***Escreve_ShiftLeft*** (Ok)
+
+Para cada 1 após os 2 do "A" do lado direito, transformamos em "b".
+
+Avançamos por todos os "b" até encontrar 1 ou "a".
+
+Lemos o símbolo, escrevemos "b" e então voltamos para a esquerda escrevendo o símbolo que foi substituído por "b".
+
+Faremos isso para todos os símbolos após o b até chegar ao branco.
+
+Se ainda houver "b", refaz o processo acima.
+
+Quando não houver mais "b", voltamos pela fita escrevendo 1 no lugar do 2.
+
+E concluímos nosso processo, podemos avançar para a fase ***MoverCabeçote***
+
+
+***MoverCabeçote*** (Ok)
+
+Avança até o "A" da transição atual da esquerda, o símbolo que foi escrito.
+
+Avança por todos os 1`s até encontrar um outro símbolo:
+
+    Se encontrarmos "R":
+
+        Avança até "$".
+
+        Avança até "A".
+
+        Avança até o próximo "a", e marca como "A".
+
+        Volta e marca o "A" antigo como "a".
+
+        Vai para a fase ***BuscaPróximoEstado***.
+
+    Se encontrarmos "L":
+
+        Avança até "$".
+
+        Avança até "A".
+
+        Volta até o "a" anterior a "A", e marca como "A", ou volta até início da fita (s).
+
+        Volta e marca o "A" antigo como "a".
+
+        Vai para a fase ***BuscaPróximoEstado***.
+
+    Se encontrarmos "S":
+
+        Vai para a fase ***BuscaPróximoEstado***.
+
+
+***BuscaPróximoEstado***
+
+Voltar até o símbolo "Q".
+
+Avançar até o próximo "q" e marcar como "E".
+
+Buscar desde o início das transições, da esquerda para a direita, o primeiro estado "q" cujo número de 1`s seja igual ao de "E":
+
+Lógica parecida com a busca por transição...
+
+
+***Rejeição*** (Ok)
+
+Caminha por toda a fita desmarcando quaisquer marcações auxiliares.
+
+Ao chegar no final da fita:
+
+    Escrever "#R"
+
+
+***Aceitação*** (Ok)
+
+Caminha por toda a fita desmarcando quaisquer marcações auxiliares.
+
+Ao chegar no final da fita:
+
+    Escrever "#A"
+
+
+###Observações###
+
+Devemos pensar um pouco mais em questões envolvendo o símbolo "b" ou "s" nas transições.
+
+Pensar um pouco tambem quando o f aparece do lado esquerdo no "qf" no caso, não sei se tratei bem isso.
