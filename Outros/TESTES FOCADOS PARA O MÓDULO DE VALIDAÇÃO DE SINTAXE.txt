@@ -1,0 +1,61 @@
+###############################################################
+
+TESTES FOCADOS PARA O MÓDULO DE VALIDAÇÃO DE SINTAXE
+###############################################################
+
+O objetivo é testar se a descrição da MT (antes do '$') é
+sintaticamente correta. A MTU deve ir para um estado de
+sucesso (início da simulação) ou rejeição (parada).
+###############################################################
+
+#-------------------------------------------------------------#
+
+Casos Válidos (Devem ser Aceitos)
+#-------------------------------------------------------------#
+
+Transição mínima e correta.
+q1a1bLqf$
+
+Transição usando todos os tipos de símbolos válidos (a, b, s).
+q1ssRq11#q11a1bLq111#q111ba1Rqf$
+
+Transições com numeração unária mais longa.
+q111a1111bLq11$
+
+Múltiplas transições com movimentos variados.
+q1a1a1Rq11#q11a1bLq1#q1bsRqf$
+
+Transição sem o estado final 'qf' como destino.
+q1a1a1Rq1#q1ba1Lq11$
+
+#-------------------------------------------------------------#
+
+Casos Inválidos (Devem ser Rejeitados)
+#-------------------------------------------------------------#
+
+Erro de caractere: 'X' não pertence ao alfabeto.
+q1a1bRXqf$
+
+Erro de estrutura: Transição não começa com 'q'.
+a1q1bLqf$
+
+Erro de estrutura: Falta o símbolo de movimento (R/L).
+q1a1bqf$
+
+Erro de estado: Estado de origem 'qf' é proibido.
+qfa1bLq1$
+
+Erro de estado: Formato inválido ('f' no meio).
+q1fa1bLqf$
+
+Erro de símbolo: Formato inválido (não começa com 'a', 'b' ou 's').
+q111bLqf$
+
+Erro de movimento: 'S' não é um movimento válido.
+q1a1bSqf$
+
+Erro de separador: Falta o '#' entre duas transições.
+q1a1bLq11q11ssRqf$
+
+Erro de separador: '#' no local errado (após o movimento).
+q1a1bL#qf$
